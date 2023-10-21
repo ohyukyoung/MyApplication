@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AI Diary_sswu</string>
+    <string name="txtView">textView</string>
+    <string name="contentWrite">내용을 입력하세요</string>
+    <string name="ccbe">운동 소모 칼로리 : </string>
+    <string name="wccbe">원하는 칼로리 소모량 : </string>
+    <string name="input">입력</string>
+    <string name="wt">         원하는 시간 (분) :        </string>
+    <string name="re">추천 운동</string>
+    <string name="exercise">한 운동 : </string>
+    <string name="time">한 시간(분) : </string>
+    <string name="exex">숫자만</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="exerciseArray">
+        <item>1. 걷기</item>
+        <item>2. 달리기</item>
+        <item>3. 자전거</item>
+        <item>4. 요가</item>
+    </string-array>
+</resources>
