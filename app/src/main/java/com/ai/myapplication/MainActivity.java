@@ -1,6 +1,8 @@
 package com.ai.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.ContentValues;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -74,13 +76,25 @@ public class MainActivity extends AppCompatActivity {
         String getTime=sdf.format(date);
 
 
+        //추가 버튼 누르면 문장 별로 sqlite에 저장
         if (v.getId() == R.id.btnInsert) {
-            String name = mainContent.getText().toString();
+            String inputText = mainContent.getText().toString(); // 사용자로부터 입력받은 여러 문장
+            String[] sentences = inputText.split("\n"); // 개행 문자('\n')를 기준으로 문장 분리
+
             db = dbHelper.getWritableDatabase();
-            sql = "INSERT INTO mainTxt (column_name) VALUES (?)";
-            db.execSQL(sql, new String[]{name});
+
+            for (String sentence : sentences) {
+                ContentValues values = new ContentValues();
+                values.put("text", sentence);
+
+                db.insert("sentences", null, values);
+            }
+
             db.close();
-        } else if (v.getId() == R.id.btnDelete) {
+        }
+
+        //삭제 버튼 누르면 해당 날짜 db 삭제됨
+        else if (v.getId() == R.id.btnDelete) {
             db = dbHelper.getWritableDatabase();
             String deleteSql = "DELETE FROM mainTxt";
             db.execSQL(deleteSql);
