@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -83,26 +84,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:orientation="horizontal" <!-- 수평으로 배치 --><![CDATA[
+    tools:context=".MainActivity">
 
-        <!-- 다른 레이아웃 요소들 추가 -->
+    ]]><!-- 차트의 가로 크기 조절 --><![CDATA[
+    />
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentBottom="true" <!-- 아래쪽에 배치하려면 이 속성 추가 -->
-        android:layout_marginBottom="16dp" <!-- 여백 조절 -->
-        />
+    ]]>
 
-    </RelativeLayout>
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart1"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="567dp" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart2"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:visibility="invisible"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="567dp" /> <!-- 차트의 가로 크기 조절 -->
+    />
+</LinearLayout>
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
