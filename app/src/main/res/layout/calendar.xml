@@ -75,7 +75,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="달력"
+        android:text="Calendar"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#9E28B3"
         android:textSize="24sp"
@@ -90,20 +90,15 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal" <!-- 수평으로 배치 --><![CDATA[
-    tools:context=".MainActivity">
+        android:orientation="horizontal" />
 
-    ]]><!-- 차트의 가로 크기 조절 --><![CDATA[
-    />
 
-    ]]>
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart1"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_weight="1"
-        android:visibility="invisible"
         tools:layout_editor_absoluteX="56dp"
         tools:layout_editor_absoluteY="567dp" />
 
@@ -111,15 +106,8 @@
         android:id="@+id/pieChart2"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:visibility="invisible"
         android:layout_weight="1"
         tools:layout_editor_absoluteX="225dp"
         tools:layout_editor_absoluteY="567dp" /> <!-- 차트의 가로 크기 조절 -->
     />
-</LinearLayout>
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

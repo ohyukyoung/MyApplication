@@ -23,7 +23,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.util.Log;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,31 +48,77 @@ public class MainActivity extends AppCompatActivity {
 
     //날짜 저장 변수
     String dateData = new String();
+    Button button;  //저장 버튼
+    DatePicker datePicker;  //날짜 선택 위젯
+    EditText editText;  //글 기록 부분
+    String filename;    //파일 입출력을 위해 저장할 파일 이름
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //listView -> 운동 추천 시스템 ui용
-        ListView listView=findViewById(R.id.listView);
-        /*
-        sqlite에서 listView 값 가져올 수 있음
-        여러가지 행 중 랜덤으로 4개만 가져오기 가능
-         */
+        setTitle("감정 일기장");
 
+        button = findViewById(R.id.button);
+        datePicker=findViewById(R.id.datepicker);
         //sqlite 부분
         mainContent=(EditText) findViewById(R.id.mainContent);
         dbHelper=new DBHelper(this,dbName,null,dbVersion);
 
-        //날짜 출력용
-        textView=findViewById(R.id.textView);
+        //datePicker를 현재 날짜로 초기화하기 위해 오늘 년, 월, 일 받아옴
+        Calendar cal=Calendar.getInstance();
+        int year=cal.get(Calendar.YEAR);
+        int month=cal.get(Calendar.MONTH);
+        int day=cal.get(Calendar.DAY_OF_MONTH);
 
-        //date 생성
-        Date date=new Date();
-        dateData=simpleDate.format(date);
+        //datepicker 오늘의 날짜로 초기값 정함
+        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+                filename=Integer.toString(i)+"_"+Integer.toString(i1)+"_"+Integer.toString(i2);
+                String str=readDiary(filename);
+                editText.setText(str);
+                button.setEnabled(true);
+            }
+        });
+        button.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                try {
+                    FileOutputStream outFs = openFileOutput(filename, Context.MODE_PRIVATE);
+                    String str = editText.getText().toString();
+                    outFs.write(str.getBytes());
+                    outFs.close();
+                    Toast.makeText(MainActivity.this, filename + "이 저장", Toast.LENGTH_SHORT).show();
+                    button.setText("수정하기");
 
-        //화면 출력
-        textView.setText(String.valueOf(dateData));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    String readDiary(String filename){
+
+        String diaryStr = null;
+        FileInputStream inFs;
+        try {  //파일이 있는경우
+            inFs = openFileInput(filename);
+
+            byte[] txt = new byte[500];
+            inFs.read(txt);
+            inFs.close();
+            diaryStr = (new String(txt)).trim();
+            button.setText("수정하기");
+
+
+        }catch (IOException e){  // 파일이 없는 경우
+            editText.setHint("일기 없음");
+            button.setText("새로 저장");
+
+        }
+
+        return diaryStr;
     }
     //클릭 시 db에 저장, 삭제
     public void mOnClick(View v){
